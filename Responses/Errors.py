@@ -1,0 +1,1 @@
+class ResponseCreationError (Exception): pass

@@ -1,0 +1,1 @@
+class NewRouteError (Exception): pass

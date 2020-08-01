@@ -7,10 +7,10 @@ server = base_web_server.Server.Server.Server () # Initialize the server
 @server.route ("/") # Specify that this function should handle HTTP calls to /
 def root (): # Create a handler function with no arguments
     return base_web_server.Responses.Response.Response.init_with_text (
-        text = "Hello, world!" # Construct a new response with the text "Hello, world!"
+        text = "Hello, world!" # Return a new response with the text "Hello, world!"
     )
-server.run () # Defaults to running on 0.0.0.0 on port 5050
-# Test it out by visiting localhost:5050 in a browser!
+server.run (host = "localhost", port = 5000) # Run the server, specifying a host and port
+# Test it out by visiting localhost:5000 in a browser!
 ```
 
 Requires Python >=3.7. (Built and tested on 3.7.3)

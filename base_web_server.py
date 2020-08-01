@@ -2,6 +2,7 @@ import http.server
 import threading
 import urllib.parse
 import json
+import sys
 
 import base_web_server_route_url_management # base_web_server_route_url_management.py
 
@@ -93,7 +94,8 @@ class RequestHandler (http.server.BaseHTTPRequestHandler):
     def log_message (self, format, *args):
         message = format % args
         if self.web_server_reference.logging_enabled:
-            sys.stderr.write (message.encode ())
+            sys.stderr.write (message + "\n")
+            sys.stderr.flush ()
 
 class ResponseCreationError (Exception): pass
 
@@ -138,11 +140,11 @@ for method_name in method_names:
 if __name__ == "__main__":
     # Since the script was run from the command line, run a test
     server = BaseWebServer ()
-    @server.route ("/<string:input_string>")
+    @server.route ("/<string:input_string>", pass_reference_to_request_handler = True)
     def root (request_handler, input_string):
         response_text = f"Success! You said '{input_string}'."
         return Response.init_with_text (text = response_text)
-    @server.route ("/shutdown", priority = True) # Setting priority forces this route to be checked before non-priority routes (e.g. root)
+    @server.route ("/shutdown", priority = True, pass_reference_to_request_handler = True) # Setting priority forces this route to be checked before non-priority routes (e.g. root)
     def shutdown (request_handler):
         # after_completion_func allows us to provide a function to be called once the request completes.
         # This is especially useful in situations such as this one,

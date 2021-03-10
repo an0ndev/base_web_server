@@ -1,4 +1,5 @@
 from .Errors import ResponseCreationError
+import json
 
 class Response:
     def __init__ (self, *, response_code = 200, headers = {}, body = b"", from_code = False, after_completion_func = None):
